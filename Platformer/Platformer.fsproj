@@ -57,12 +57,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlatformerActor.fs" />
     <Compile Include="PlatformerGame.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <None Include="SDL.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="Content\obstacle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\player.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
