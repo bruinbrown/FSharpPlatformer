@@ -38,6 +38,7 @@ type Game1 () as x =
         let current = WorldObjects.Value
         do WorldObjects <- lazy (current
                                  |> List.map AddGravity'
+                                 |> HandleCollisions
                                  |> List.map ResolveVelocities)
         do WorldObjects.Force () |> ignore
         ()
