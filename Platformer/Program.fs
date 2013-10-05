@@ -1,4 +1,7 @@
-﻿[<EntryPoint>]
+﻿open PlatformerGame
+
+[<EntryPoint>]
 let main argv = 
-    printfn "%A" argv
+    use g = new Game1()
+    g.Run()
     0

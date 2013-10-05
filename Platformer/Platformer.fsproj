@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlatformerGame.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <None Include="SDL.dll">
