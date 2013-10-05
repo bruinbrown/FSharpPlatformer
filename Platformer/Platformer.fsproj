@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PlatformerActor.fs" />
+    <Compile Include="PlatformerPhysics.fs" />
     <Compile Include="PlatformerGame.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
