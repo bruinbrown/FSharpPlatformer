@@ -2,7 +2,9 @@
 
 open Microsoft.Xna.Framework
 open Microsoft.Xna.Framework.Graphics
+open Microsoft.Xna.Framework.Input
 open PlatformerActor
+open PlatformerInput
 open PlatformerPhysics
 
 type Game1 () as x =
@@ -35,9 +37,12 @@ type Game1 () as x =
 
     override x.Update (gameTime) =
         let AddGravity' = AddGravity gameTime
+        let HandleInput' = HandleInput (Keyboard.GetState ())
         let current = WorldObjects.Value
         do WorldObjects <- lazy (current
+                                 |> List.map HandleInput'
                                  |> List.map AddGravity'
+                                 |> List.map AddFriction
                                  |> HandleCollisions
                                  |> List.map ResolveVelocities)
         do WorldObjects.Force () |> ignore

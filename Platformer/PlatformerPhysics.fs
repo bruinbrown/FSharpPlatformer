@@ -27,7 +27,7 @@ let HandleCollisions worldObjects =
     let FindOptimumCollision a b =
         match a.ActorType,b.ActorType with
         | Player(h), Obstacle -> match a.BodyType, b.BodyType with
-                                    | Dynamic (s), Static -> { a with BodyType = Dynamic((FindNewVelocity a.DesiredBounds b.CurrentBounds s)) }
+                                    | Dynamic (s), Static -> { a with BodyType = Dynamic((FindNewVelocity a.DesiredBounds b.CurrentBounds s)); ActorType = Player(Nothing) }
                                     | _ -> a
         | _ -> a
 
@@ -50,10 +50,16 @@ let HandleCollisions worldObjects =
 
 let AddGravity (gameTime:GameTime) actor =
     let ms = gameTime.ElapsedGameTime.TotalMilliseconds
-    let g = ms * 0.005
+    let g = ms * 0.01
     match actor.BodyType with
     | Dynamic(s) -> let d = Vector2(s.X, s.Y + (float32 g))
                     { actor with BodyType = Dynamic(d); }
+    | _ -> actor
+
+let AddFriction actor = 
+    match actor.BodyType with
+    | Dynamic (v) -> let newV = Vector2(v.X*0.95f, v.Y)
+                     { actor with BodyType = Dynamic(newV) }
     | _ -> actor
 
 let ResolveVelocities actor =
