@@ -3,6 +3,7 @@
 open Microsoft.Xna.Framework
 open Microsoft.Xna.Framework.Graphics
 open Microsoft.Xna.Framework.Content
+open PlatformerAnimation
 
 type BodyType =
     | Static
@@ -21,7 +22,7 @@ type WorldActor =
         ActorType : ActorType;
         Position : Vector2;
         Size : Vector2;
-        Texture : Texture2D option;
+        Animation : Animation option;
         BodyType : BodyType
     }
     member this.CurrentBounds
@@ -35,11 +36,19 @@ type WorldActor =
 
 let CreateActor (content:ContentManager) (textureName, actorType, position, size, isStatic) =
     let tex = if not (System.String.IsNullOrEmpty textureName) then
-                  Some(content.Load<Texture2D> textureName)
+                  let tex = content.Load<Texture2D>(textureName)
+                  let anim = CreateAnimation tex 100
+                  Some(anim)
               else
                   None
     let bt = if isStatic then
                 Static
              else
                 Dynamic(Vector2(0.f,0.f))
-    { ActorType = actorType; Position = position; Size = size; Texture = tex; BodyType = bt; }
+    { ActorType = actorType; Position = position; Size = size; Animation = tex; BodyType = bt; }
+
+let UpdateActorAnimation gameTime (actor:WorldActor) =
+    let animation = if actor.Animation.IsSome then
+                        Some(UpdateAnimation gameTime actor.Animation.Value)
+                    else None
+    { actor with Animation = animation }
